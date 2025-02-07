@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="bootstrap.min.css">
+    <link rel="stylesheet" href="bootstrap.js">
+</head>
+<body>
+    <div class=" container my-5" id="studentform">
+        <div class="card bg-translucent shadow p-4">
+        <h1 class="text-center text-dark mb-4" style="font-size: 40px;">REPORT GENERATOR</h1>
+        <label for="name" class="form-label ">NAME: </label>
+        <input class="mb-3 form-control shadow" type="text" placeholder="Enter Full Name" name="name" id="name"><br><br>
+        <label for="roll" class="form-label">ROLL NO: </label>
+        <input class="mb-3 form-control shadow" type="number" placeholder="Enter Roll No" name="rollno" id="rollno"><br><br>
+        <button type="button" class="btn btn-dark shadow w-100" onclick="generateReport()">Generate Report</button>
+        </div>
+    </div>
+    
+   <div id="report" class="container my-5">
+    
+   </div>  
+   <script >
+    function getGrade(percentage){
+            if(percentage>=80){
+                return "A+";
+            }
+            else if(percentage>=70){
+                return "A";
+            }
+            else if(percentage>=60){
+                return "B";
+            }
+            else if(percentage>=50){
+                return "C";
+            }
+            else if(percentage>=40){
+                return "D";
+            }
+            else if(percentage<40){
+                return "F";
+            }
+        }
+        
+
+        function randomnumber(){
+            return Math.floor(Math.random() * 101);
+        }
+
+        function generateReport() {
+            var name = document.getElementById("name").value.trim();
+            var rollno = document.getElementById("rollno").value.trim();
+
+            if (!name || !rollno) {
+                alert("Please fill in both fields.");
+                return;
+            }
+            if (!name.match(/^[a-zA-Z\s]+$/)) {
+            alert("Name can only contain letters and spaces.");
+            return;
+             }
+
+            if (!rollno.match(/^\d+$/)) {
+            alert("Roll No must be a numeric value.");
+             return;
+            }
+      var grade="12<sup>th</sup>";
+      var subjects={maths:randomnumber(),
+                    Science:randomnumber(),
+                    English:randomnumber(),
+                    Socials:randomnumber(),
+                    computer:randomnumber()};
+        var marks= subjects.maths + subjects.Science + subjects.English + subjects.Socials + subjects.computer;
+        
+        
+
+        var totalMarks=500;
+        var percentage=(marks/totalMarks)*100;
+        var report="";
+        report+="<div class='card shadow p-4'><h1><strong>Student Report</strong></h1>";
+        report+="<h3><strong>Name: </strong>"+ name+"</h3>";
+        report+="<h3><strong>Grade: </strong>"+ grade+"</h3>";
+        report+="<h3><strong>Roll No: </strong>"+ rollno+"</h3>";
+        report+="<table border=1, class='table table-striped table-bordered table-dark' >";
+        report+="<thead class=''><tr><th>Subject</th><th>Obtained Marks</th><th>Grades</th></tr></thead>";
+        report+="<tr><td>Maths</td><td>"+subjects.maths+"</td>"+"<td>"+ getGrade(subjects.maths)+"</td></tr>";
+        report+="<tr><td>Science</td><td>"+subjects.Science+ "</td><td>"+getGrade(subjects.Science)+"</td></tr>";
+        report+="<tr><td>English</td><td>"+subjects.English+ "</td><td>"+getGrade(subjects.English)+"</td></tr>";
+        report+="<tr><td>Socials</td><td>"+subjects.Socials+ "</td><td>"+getGrade(subjects.Socials)+"</td></tr>";
+        report+="<tr><td>Computer</td><td>"+subjects.computer+ "</td><td>"+getGrade(subjects.computer)+"</td></tr>";
+        report+="<tr><td><strong>Marks</strong></td>"+"<td colspan=2><strong>"+totalMarks+"/"+marks+"</strong></td></tr>";
+        report+="<tr><td><strong>Percentage</strong></td>"+"<td colspan=2><strong>"+Math.floor(percentage)+"%</strong></td></tr>"
+        report+="<tr><td><strong>Grade</strong></td>"+"<td colspan=2><strong>"+getGrade(percentage)+"</strong></td></tr>";
+        report+="</table></div>";
+        document.getElementById("report").innerHTML=report;
+        }
+   </script> 
+</body>
+</html>
